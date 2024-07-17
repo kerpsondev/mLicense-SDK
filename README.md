@@ -1,4 +1,6 @@
-## <img src="https://mlicense.net/logo.webp" width="25" height="25"> Api for mLicense system. [![Release](https://img.shields.io/github/v/release/kerpsondev/LicenseUtilities.svg)](https://github.com/kerpsondev/LicenseUtilities/releases)
+## <img src="https://mlicense.net/logo.webp" width="25" height="25"> Api for mLicense system. 
+
+[![Release](https://img.shields.io/github/v/release/kerpsondev/LicenseUtilities.svg)](https://github.com/kerpsondev/LicenseUtilities/releases)
 
 Api allows you to connect to the mLicense system and easily use its capabilities from within your app!
 
