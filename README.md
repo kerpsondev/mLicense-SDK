@@ -142,7 +142,7 @@ In a situation where you want to create a license through the api, use the Licen
 ```java
 License license = License.createLicense()
     .setId(0) // Set the license id only when you want to update it, not create it.
-    .setKey(KEY)
+    .setKey(KEY) // You can use too method License.generateKey()
     .setProductId(PRODUCT_ID)
     .setClientInfo(CLIENT_NAME, EMAIL, DISCORD_ID) // String, String (Nullable), Long
     .setAddressInfo(LIMIT, DURATION, ASSIGNED_TO) // Integer, Long, String (Nullable)
