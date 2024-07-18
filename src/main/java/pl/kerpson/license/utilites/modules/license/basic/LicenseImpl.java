@@ -1,6 +1,7 @@
 package pl.kerpson.license.utilites.modules.license.basic;
 
 import com.google.gson.JsonObject;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
@@ -358,14 +359,14 @@ class LicenseImpl implements License {
     }
 
     @Override
-    public Builder setAddressInfo(int limit, long duration, @Nullable String assignedTo) {
-      this.addressInfo = new AddressInfoImpl(limit, duration, assignedTo, null, List.of());
+    public Builder setAddressInfo(int limit, long duration, @Nullable String assignedAddress) {
+      this.addressInfo = new AddressInfoImpl(limit, duration, assignedAddress, null, List.of());
       return this;
     }
 
     @Override
-    public Builder setMachineInfo(int limit, long duration, @Nullable String assignedTo) {
-      this.machineInfo = new MachineInfoImpl(limit, duration, assignedTo, null, List.of());
+    public Builder setMachineInfo(int limit, long duration, @Nullable String assignedMachine) {
+      this.machineInfo = new MachineInfoImpl(limit, duration, assignedMachine, null, List.of());
       return this;
     }
 
@@ -412,6 +413,28 @@ class LicenseImpl implements License {
           this.machineInfo,
           this.durationInfo
       );
+    }
+  }
+
+  static class KeyGenerator {
+
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final SecureRandom RANDOM = new SecureRandom();
+
+    public static String generateLicenseKey() {
+      StringBuilder licenseKey = new StringBuilder();
+
+      for (int i = 0; i < 5; i++) {
+        if (i > 0) {
+          licenseKey.append("-");
+        }
+        for (int i1 = 0; i1 < 5; i1++) {
+          int index = RANDOM.nextInt(CHARACTERS.length());
+          licenseKey.append(CHARACTERS.charAt(index));
+        }
+      }
+
+      return licenseKey.toString();
     }
   }
 }

@@ -5,11 +5,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import pl.kerpson.license.utilites.exception.LicenseCreateException;
 import pl.kerpson.license.utilites.modules.license.basic.LicenseImpl.BuilderImpl;
+import pl.kerpson.license.utilites.modules.license.basic.LicenseImpl.KeyGenerator;
 
 public interface License {
 
   static Builder createLicense() {
     return new BuilderImpl();
+  }
+
+  static String generateKey() {
+    return KeyGenerator.generateLicenseKey();
   }
 
   int getId();
@@ -136,9 +141,9 @@ public interface License {
 
     Builder setClientInfo(@NotNull String name, @Nullable String email, long discordId);
 
-    Builder setAddressInfo(int limit, long duration, @Nullable String assignedTo);
+    Builder setAddressInfo(int limit, long duration, @Nullable String assignedAddress);
 
-    Builder setMachineInfo(int limit, long duration, @Nullable String assignedTo);
+    Builder setMachineInfo(int limit, long duration, @Nullable String assignedMachine);
 
     Builder setDurationInfo(long duration, boolean deleteAfterExpire);
 
