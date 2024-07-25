@@ -176,3 +176,6 @@ Blacklist blacklist = Blacklist.createBlacklist()
 blacklistModule.create(blacklist).complete(); //Create blacklist
 blacklistModule.update(blacklist).complete(); //Update blacklist
 ```
+
+### 💙 Status projektu
+![Stats](https://repobeats.axiom.co/api/embed/7c5e187235db0a723ad80ba3d054532d627fce94.svg "Repobeats analytics image")
