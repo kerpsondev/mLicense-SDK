@@ -7,6 +7,8 @@ import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.license.basic.License;
 import pl.kerpson.license.utilites.modules.license.operation.LicenseCreateOperation;
 import pl.kerpson.license.utilites.modules.license.operation.LicenseGetAllOperation;
+import pl.kerpson.license.utilites.modules.license.operation.LicenseGetIdOperation;
+import pl.kerpson.license.utilites.modules.license.operation.LicenseGetKeyOperation;
 import pl.kerpson.license.utilites.modules.license.operation.LicenseUpdateOperation;
 
 class LicenseModuleImpl implements LicenseModule {
@@ -37,12 +39,12 @@ class LicenseModuleImpl implements LicenseModule {
 
   @Override
   public Operation<OperationResult<License>> get(String key) {
-    throw new IllegalStateException("Operation currently is disabled");
+    return new LicenseGetKeyOperation(LICENSES_ALL_URL, this.secrets, key);
   }
 
   @Override
   public Operation<OperationResult<License>> get(int id) {
-    throw new IllegalStateException("Operation currently is disabled");
+    return new LicenseGetIdOperation(LICENSES_ALL_URL, this.secrets, id);
   }
 
   @Override

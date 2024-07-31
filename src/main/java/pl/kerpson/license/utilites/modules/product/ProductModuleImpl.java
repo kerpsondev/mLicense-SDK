@@ -6,6 +6,7 @@ import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.product.basic.Product;
 import pl.kerpson.license.utilites.modules.product.operation.ProductCreateOperation;
+import pl.kerpson.license.utilites.modules.product.operation.ProductGetIdOperation;
 import pl.kerpson.license.utilites.modules.product.operation.ProductUpdateOperation;
 import pl.kerpson.license.utilites.modules.product.operation.ProductsGetAllOperation;
 
@@ -37,7 +38,7 @@ class ProductModuleImpl implements ProductModule {
 
   @Override
   public Operation<OperationResult<Product>> get(int id) {
-    throw new IllegalStateException("Operation currently is disabled");
+    return new ProductGetIdOperation(PRODUCTS_ALL_URL, this.secrets, id);
   }
 
   @Override

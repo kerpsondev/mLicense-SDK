@@ -7,6 +7,7 @@ import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.blacklist.basic.Blacklist;
 import pl.kerpson.license.utilites.modules.blacklist.operation.BlacklistCreateOperation;
 import pl.kerpson.license.utilites.modules.blacklist.operation.BlacklistGetAllOperation;
+import pl.kerpson.license.utilites.modules.blacklist.operation.BlacklistGetIdOperation;
 import pl.kerpson.license.utilites.modules.blacklist.operation.BlacklistUpdateOperation;
 
 class BlacklistModuleImpl implements BlacklistModule {
@@ -37,7 +38,7 @@ class BlacklistModuleImpl implements BlacklistModule {
 
   @Override
   public Operation<OperationResult<Blacklist>> get(int id) {
-    throw new IllegalStateException("Operation currently is disabled");
+    return new BlacklistGetIdOperation(BLACKLISTS_ALL_URL, this.secrets, id);
   }
 
   @Override

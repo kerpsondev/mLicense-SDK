@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import pl.kerpson.license.utilites.filter.JsonFilter;
 import pl.kerpson.license.utilites.modules.blacklist.basic.Blacklist.Type;
 
 public final class BlacklistReader {
@@ -24,6 +25,12 @@ public final class BlacklistReader {
     }
 
     return blacklists;
+  }
+
+  public static Blacklist readBlacklist(HttpResponse<String> response, JsonFilter filter) {
+    Gson gson = new Gson();
+    JsonArray jsonArray = gson.fromJson(response.body(), JsonArray.class);
+    return filter.applySingle(jsonArray, BlacklistReader::readBlacklist);
   }
 
   public static Blacklist readBlacklist(JsonObject jsonObject) {
