@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import pl.kerpson.license.utilites.exception.MLicenseBuilderException;
 import pl.kerpson.license.utilites.logger.LoggerProvider;
 import pl.kerpson.license.utilites.logger.LoggerProvider.LogType;
+import pl.kerpson.license.utilites.updater.LicenseUpdater;
 
 class MBuilderImpl implements MBuilder {
 
@@ -65,6 +66,15 @@ class MBuilderImpl implements MBuilder {
     this.logger.log(LogType.INFO, String.format("Token: %s", this.secrets.getToken().isEmpty() ? "provided" : "empty"));
     this.logger.log(LogType.INFO, "");
     this.logger.log(LogType.INFO, "ˆˆˆˆˆˆˆˆˆˆˆ  ::  ˆˆˆˆˆˆˆˆˆˆˆ");
+
+    LicenseUpdater.checkUpdate().thenAccept(result -> {
+      this.logger.log(LogType.INFO, "Check api version...");
+      if (result.isLatest()) {
+        this.logger.log(LogType.INFO, String.format("You are using latest version! (%s)", result.getLatestVersion()));
+      } else {
+        this.logger.log(LogType.INFO, String.format("The new version of LicenseUtilities (%s) is available! Download from https://github.com/kerpsondev/LicenseUtilities", result.getLatestVersion()));
+      }
+    });
 
     return MLicenseImpl.build(this.secrets);
   }
