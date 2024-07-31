@@ -61,8 +61,8 @@ class MBuilderImpl implements MBuilder {
     this.logger.log(LogType.INFO, "          mLicense          ");
     this.logger.log(LogType.INFO, "   Unofficial license api   ");
     this.logger.log(LogType.INFO, "");
-    this.logger.log(LogType.INFO, String.format("Key: %s", this.secrets.getKey()));
-    this.logger.log(LogType.INFO, String.format("Token: %s", this.secrets.getToken()));
+    this.logger.log(LogType.INFO, String.format("Key: %s", this.secrets.getKey().isEmpty() ? "provided" : "empty"));
+    this.logger.log(LogType.INFO, String.format("Token: %s", this.secrets.getToken().isEmpty() ? "provided" : "empty"));
     this.logger.log(LogType.INFO, "");
     this.logger.log(LogType.INFO, "ˆˆˆˆˆˆˆˆˆˆˆ  ::  ˆˆˆˆˆˆˆˆˆˆˆ");
 
