@@ -13,7 +13,7 @@ Api has few modules:
 All operations can be performed synchronously as well as asynchronously.
 <br>
 
-⚠️**Note**: Currently delete and get by id do not work due to errors on the mLicense side.
+⚠️**Note**: Currently delete do not work due to errors on the mLicense side.
 
 ## 💙 Lets start
 
