@@ -33,8 +33,8 @@ Add api to your project by maven or gradle.
 
 <dependencies>
   <dependency>
-    <groupId>pl.kerpson.utilities</groupId>
-    <artifactId>LicenseUtilities</artifactId>
+    <groupId>pl.kerpson.utilities.license</groupId>
+    <artifactId>license-utilities</artifactId>
     <version>1.0.0-BETA2</version>
   </dependency>
 </dependencies>
@@ -47,7 +47,7 @@ maven {
     url = uri("https://repository.minecreators.pl/releases")
 }
 
-implementation("pl.kerpson.utilities:LicenseUtilities:1.0.0-BETA2")
+implementation("pl.kerpson.utilities.license:license-utilities:1.0.0-BETA2")
 ```
 <br>
 
