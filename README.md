@@ -13,7 +13,8 @@ Api has few modules:
 All operations can be performed synchronously as well as asynchronously.
 <br>
 
-⚠️**Note**: Currently delete do not work due to errors on the mLicense side.
+> [!WARNING]  
+> Currently delete do not work due to errors on the mLicense side.
 
 ## 💙 Lets start
 
@@ -177,5 +178,5 @@ blacklistModule.create(blacklist).complete(); //Create blacklist
 blacklistModule.update(blacklist).complete(); //Update blacklist
 ```
 
-### 💙 Status projektu
+### 💙 Project status
 ![Stats](https://repobeats.axiom.co/api/embed/7c5e187235db0a723ad80ba3d054532d627fce94.svg "Repobeats analytics image")
