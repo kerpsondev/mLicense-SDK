@@ -13,7 +13,8 @@ Api has few modules:
 All operations can be performed synchronously as well as asynchronously.
 <br>
 
-⚠️**Note**: Currently delete and get by id do not work due to errors on the mLicense side.
+> [!WARNING]  
+> Currently delete do not work due to errors on the mLicense side.
 
 ## 💙 Lets start
 
@@ -32,8 +33,8 @@ Add api to your project by maven or gradle.
 
 <dependencies>
   <dependency>
-    <groupId>pl.kerpson.utilities</groupId>
-    <artifactId>LicenseUtilities</artifactId>
+    <groupId>pl.kerpson.utilities.license</groupId>
+    <artifactId>license-utilities</artifactId>
     <version>1.0.0-BETA2</version>
   </dependency>
 </dependencies>
@@ -46,7 +47,7 @@ maven {
     url = uri("https://repository.minecreators.pl/releases")
 }
 
-implementation("pl.kerpson.utilities:LicenseUtilities:1.0.0-BETA2")
+implementation("pl.kerpson.utilities.license:license-utilities:1.0.0-BETA2")
 ```
 <br>
 
@@ -177,5 +178,5 @@ blacklistModule.create(blacklist).complete(); //Create blacklist
 blacklistModule.update(blacklist).complete(); //Update blacklist
 ```
 
-### 💙 Status projektu
+### 💙 Project status
 ![Stats](https://repobeats.axiom.co/api/embed/7c5e187235db0a723ad80ba3d054532d627fce94.svg "Repobeats analytics image")
