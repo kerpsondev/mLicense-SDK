@@ -1,26 +1,23 @@
-package pl.kerpson.license.utilites.modules.blacklist.operation;
+package pl.kerpson.license.utilites.modules.license.operation;
 
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import pl.kerpson.license.utilites.MSecrets;
 import pl.kerpson.license.utilites.exception.IllegalStatusException;
-import pl.kerpson.license.utilites.filter.JsonFilter;
 import pl.kerpson.license.utilites.http.HttpBuilder;
 import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
-import pl.kerpson.license.utilites.modules.blacklist.basic.Blacklist;
-import pl.kerpson.license.utilites.modules.blacklist.basic.BlacklistReader;
+import pl.kerpson.license.utilites.modules.license.basic.License;
+import pl.kerpson.license.utilites.modules.license.basic.LicenseReader;
 
-public class BlacklistGetIdOperation implements Operation<OperationResult<Blacklist>> {
+public class LicenseGetOperation implements Operation<OperationResult<License>> {
 
   private final String url;
   private final MSecrets secrets;
-  private final int id;
 
-  public BlacklistGetIdOperation(String url, MSecrets secrets, int id) {
+  public LicenseGetOperation(String url, MSecrets secrets) {
     this.url = url;
     this.secrets = secrets;
-    this.id = id;
   }
 
   private HttpBuilder prepareRequest() {
@@ -30,30 +27,28 @@ public class BlacklistGetIdOperation implements Operation<OperationResult<Blackl
   }
 
   @Override
-  public OperationResult<Blacklist> complete() {
+  public OperationResult<License> complete() {
     try {
       HttpResponse<String> response = this.prepareRequest().sync();
       if (response.statusCode() == 401) {
         return new OperationResult<>(null, new IllegalStatusException(401, "You don't have permission!"));
       }
 
-      JsonFilter jsonFilter = JsonFilter.createFilter(jsonObject -> jsonObject.get("id").getAsInt() == this.id);
-      return new OperationResult<>(BlacklistReader.readBlacklist(response, jsonFilter), null);
+      return new OperationResult<>(LicenseReader.readLicense(response), null);
     } catch (Exception exception) {
       return new OperationResult<>(null, exception);
     }
   }
 
   @Override
-  public CompletableFuture<OperationResult<Blacklist>> completeAsync() {
+  public CompletableFuture<OperationResult<License>> completeAsync() {
     return prepareRequest().async()
         .thenApply(response -> {
           if (response.statusCode() == 401) {
-            return new OperationResult<Blacklist>(null, new IllegalStatusException(401, "You don't have permission!"));
+            return new OperationResult<License>(null, new IllegalStatusException(401, "You don't have permission!"));
           }
 
-          JsonFilter jsonFilter = JsonFilter.createFilter(jsonObject -> jsonObject.get("id").getAsInt() == this.id);
-          return new OperationResult<>(BlacklistReader.readBlacklist(response, jsonFilter), null);
+          return new OperationResult<>(LicenseReader.readLicense(response), null);
         })
         .exceptionally(exception -> new OperationResult<>(null, exception));
   }

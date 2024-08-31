@@ -4,23 +4,20 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import pl.kerpson.license.utilites.MSecrets;
 import pl.kerpson.license.utilites.exception.IllegalStatusException;
-import pl.kerpson.license.utilites.filter.JsonFilter;
 import pl.kerpson.license.utilites.http.HttpBuilder;
 import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.product.basic.Product;
 import pl.kerpson.license.utilites.modules.product.basic.ProductReader;
 
-public class ProductGetIdOperation implements Operation<OperationResult<Product>> {
+public class ProductGetOperation implements Operation<OperationResult<Product>> {
 
   private final String url;
   private final MSecrets secrets;
-  private final int id;
 
-  public ProductGetIdOperation(String url, MSecrets secrets, int id) {
+  public ProductGetOperation(String url, MSecrets secrets) {
     this.url = url;
     this.secrets = secrets;
-    this.id = id;
   }
 
   private HttpBuilder prepareRequest() {
@@ -37,8 +34,7 @@ public class ProductGetIdOperation implements Operation<OperationResult<Product>
         return new OperationResult<>(null, new IllegalStatusException(401, "You don't have permission!"));
       }
 
-      JsonFilter jsonFilter = JsonFilter.createFilter(jsonObject -> jsonObject.get("id").getAsInt() == this.id);
-      return new OperationResult<>(ProductReader.readProduct(response, jsonFilter), null);
+      return new OperationResult<>(ProductReader.readProduct(response), null);
     } catch (Exception exception) {
       return new OperationResult<>(null, exception);
     }
@@ -52,8 +48,7 @@ public class ProductGetIdOperation implements Operation<OperationResult<Product>
             return new OperationResult<Product>(null, new IllegalStatusException(401, "You don't have permission!"));
           }
 
-          JsonFilter jsonFilter = JsonFilter.createFilter(jsonObject -> jsonObject.get("id").getAsInt() == this.id);
-          return new OperationResult<>(ProductReader.readProduct(response, jsonFilter), null);
+          return new OperationResult<>(ProductReader.readProduct(response), null);
         })
         .exceptionally(exception -> new OperationResult<>(null, exception));
   }

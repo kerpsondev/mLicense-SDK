@@ -6,7 +6,8 @@ import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.product.basic.Product;
 import pl.kerpson.license.utilites.modules.product.operation.ProductCreateOperation;
-import pl.kerpson.license.utilites.modules.product.operation.ProductGetIdOperation;
+import pl.kerpson.license.utilites.modules.product.operation.ProductDeleteOperation;
+import pl.kerpson.license.utilites.modules.product.operation.ProductGetOperation;
 import pl.kerpson.license.utilites.modules.product.operation.ProductUpdateOperation;
 import pl.kerpson.license.utilites.modules.product.operation.ProductsGetAllOperation;
 
@@ -14,6 +15,9 @@ class ProductModuleImpl implements ProductModule {
 
   private final static String PRODUCTS_ALL_URL = "https://api.mlicense.net/api/v1/products/all";
   private final static String PRODUCTS_CREATE_URL = "https://api.mlicense.net/api/v1/products";
+  private final static String PRODUCTS_DELETE_URL = "https://api.mlicense.net/api/v1/products?id=%s";
+  private final static String PRODUCTS_ID_URL = "https://api.mlicense.net/api/v1/products/id?id=%s";
+  private final static String PRODUCTS_NAME_URL = "https://api.mlicense.net/api/v1/products/name?name=%s";
 
   private final MSecrets secrets;
 
@@ -23,7 +27,7 @@ class ProductModuleImpl implements ProductModule {
 
   @Override
   public Operation<OperationResult<Boolean>> delete(int id) {
-    throw new IllegalStateException("Operation currently is disabled");
+    return new ProductDeleteOperation(String.format(PRODUCTS_DELETE_URL, id), this.secrets);
   }
 
   @Override
@@ -38,7 +42,12 @@ class ProductModuleImpl implements ProductModule {
 
   @Override
   public Operation<OperationResult<Product>> get(int id) {
-    return new ProductGetIdOperation(PRODUCTS_ALL_URL, this.secrets, id);
+    return new ProductGetOperation(String.format(PRODUCTS_ID_URL, id), this.secrets);
+  }
+
+  @Override
+  public Operation<OperationResult<Product>> get(String name) {
+    return new ProductGetOperation(String.format(PRODUCTS_NAME_URL, name), this.secrets);
   }
 
   @Override
