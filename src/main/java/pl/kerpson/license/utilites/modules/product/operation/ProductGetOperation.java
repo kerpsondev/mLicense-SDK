@@ -3,12 +3,13 @@ package pl.kerpson.license.utilites.modules.product.operation;
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import pl.kerpson.license.utilites.MSecrets;
-import pl.kerpson.license.utilites.exception.IllegalStatusException;
 import pl.kerpson.license.utilites.http.HttpBuilder;
 import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.product.basic.Product;
 import pl.kerpson.license.utilites.modules.product.basic.ProductReader;
+import pl.kerpson.license.utilites.status.StatusCode;
+import pl.kerpson.license.utilites.status.StatusParser;
 
 public class ProductGetOperation implements Operation<OperationResult<Product>> {
 
@@ -30,8 +31,9 @@ public class ProductGetOperation implements Operation<OperationResult<Product>> 
   public OperationResult<Product> complete() {
     try {
       HttpResponse<String> response = this.prepareRequest().sync();
-      if (response.statusCode() == 401) {
-        return new OperationResult<>(null, new IllegalStatusException(401, "You don't have permission!"));
+      StatusCode statusCode = StatusParser.parse(response);
+      if (!statusCode.isOk()) {
+        return new OperationResult<>(null, statusCode.getThrowable());
       }
 
       return new OperationResult<>(ProductReader.readProduct(response), null);
@@ -44,8 +46,9 @@ public class ProductGetOperation implements Operation<OperationResult<Product>> 
   public CompletableFuture<OperationResult<Product>> completeAsync() {
     return prepareRequest().async()
         .thenApply(response -> {
-          if (response.statusCode() == 401) {
-            return new OperationResult<Product>(null, new IllegalStatusException(401, "You don't have permission!"));
+          StatusCode statusCode = StatusParser.parse(response);
+          if (!statusCode.isOk()) {
+            return new OperationResult<Product>(null, statusCode.getThrowable());
           }
 
           return new OperationResult<>(ProductReader.readProduct(response), null);

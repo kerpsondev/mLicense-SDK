@@ -4,12 +4,13 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import pl.kerpson.license.utilites.MSecrets;
-import pl.kerpson.license.utilites.exception.IllegalStatusException;
 import pl.kerpson.license.utilites.http.HttpBuilder;
 import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.license.basic.License;
 import pl.kerpson.license.utilites.modules.license.basic.LicenseReader;
+import pl.kerpson.license.utilites.status.StatusCode;
+import pl.kerpson.license.utilites.status.StatusParser;
 
 public class LicenseGetAllOperation implements Operation<OperationResult<List<License>>> {
 
@@ -31,8 +32,9 @@ public class LicenseGetAllOperation implements Operation<OperationResult<List<Li
   public OperationResult<List<License>> complete() {
     try {
       HttpResponse<String> response = this.prepareRequest().sync();
-      if (response.statusCode() == 401) {
-        return new OperationResult<>(List.of(), new IllegalStatusException(401, "You don't have permission!"));
+      StatusCode statusCode = StatusParser.parse(response);
+      if (!statusCode.isOk()) {
+        return new OperationResult<>(List.of(), statusCode.getThrowable());
       }
 
       return new OperationResult<>(LicenseReader.readLicenses(response), null);
@@ -45,8 +47,9 @@ public class LicenseGetAllOperation implements Operation<OperationResult<List<Li
   public CompletableFuture<OperationResult<List<License>>> completeAsync() {
     return prepareRequest().async()
         .thenApply(response -> {
-          if (response.statusCode() == 401) {
-            return new OperationResult<List<License>>(List.of(), new IllegalStatusException(401, "You don't have permission!"));
+          StatusCode statusCode = StatusParser.parse(response);
+          if (!statusCode.isOk()) {
+            return new OperationResult<List<License>>(List.of(), statusCode.getThrowable());
           }
 
           return new OperationResult<>(LicenseReader.readLicenses(response), null);

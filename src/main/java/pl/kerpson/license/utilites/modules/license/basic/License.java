@@ -3,7 +3,6 @@ package pl.kerpson.license.utilites.modules.license.basic;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import pl.kerpson.license.utilites.exception.LicenseCreateException;
 import pl.kerpson.license.utilites.modules.license.basic.LicenseImpl.BuilderImpl;
 import pl.kerpson.license.utilites.modules.license.basic.LicenseImpl.KeyGenerator;
 
@@ -147,6 +146,6 @@ public interface License {
 
     Builder setDurationInfo(long duration, boolean deleteAfterExpire);
 
-    License build() throws LicenseCreateException;
+    License build();
   }
 }

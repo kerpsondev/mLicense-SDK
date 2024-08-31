@@ -3,11 +3,12 @@ package pl.kerpson.license.utilites.modules.product.operation;
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import pl.kerpson.license.utilites.MSecrets;
-import pl.kerpson.license.utilites.exception.ProductUpdateException;
 import pl.kerpson.license.utilites.http.HttpBuilder;
 import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.product.basic.Product;
+import pl.kerpson.license.utilites.status.StatusCode;
+import pl.kerpson.license.utilites.status.StatusParser;
 
 public class ProductUpdateOperation implements Operation<OperationResult<Boolean>> {
 
@@ -32,16 +33,9 @@ public class ProductUpdateOperation implements Operation<OperationResult<Boolean
   public OperationResult<Boolean> complete() {
     try {
       HttpResponse<String> response = this.prepareRequest().sync();
-      if (response.statusCode() == 401) {
-        return new OperationResult<>(false, new ProductUpdateException("You don't have permission to create product."));
-      }
-
-      if (response.statusCode() == 409) {
-        return new OperationResult<>(false, new ProductUpdateException("Product with this name already exists."));
-      }
-
-      if (response.statusCode() == 423) {
-        return new OperationResult<>(false, new ProductUpdateException("You don't have any plan assigned or you have reached the limit of licenses."));
+      StatusCode statusCode = StatusParser.parse(response);
+      if (!statusCode.isOk()) {
+        return new OperationResult<>(false, statusCode.getThrowable());
       }
 
       return new OperationResult<>(true, null);
@@ -53,16 +47,9 @@ public class ProductUpdateOperation implements Operation<OperationResult<Boolean
   @Override
   public CompletableFuture<OperationResult<Boolean>> completeAsync() {
     return prepareRequest().async().thenApply(response -> {
-      if (response.statusCode() == 401) {
-        return new OperationResult<>(false, new ProductUpdateException("You don't have permission to create product."));
-      }
-
-      if (response.statusCode() == 409) {
-        return new OperationResult<>(false, new ProductUpdateException("Product with this name already exists."));
-      }
-
-      if (response.statusCode() == 423) {
-        return new OperationResult<>(false, new ProductUpdateException("You don't have any plan assigned or you have reached the limit of licenses."));
+      StatusCode statusCode = StatusParser.parse(response);
+      if (!statusCode.isOk()) {
+        return new OperationResult<>(false, statusCode.getThrowable());
       }
 
       return new OperationResult<>(true, null);

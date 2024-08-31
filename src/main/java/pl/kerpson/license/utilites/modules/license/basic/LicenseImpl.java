@@ -7,7 +7,6 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import pl.kerpson.license.utilites.exception.LicenseCreateException;
 
 class LicenseImpl implements License {
 
@@ -385,21 +384,40 @@ class LicenseImpl implements License {
     }
 
     @Override
-    public License build() throws LicenseCreateException {
+    public License build() {
       if (Objects.isNull(this.clientInfo)) {
-        throw new LicenseCreateException("Client is null!");
+        this.clientInfo = new ClientInfoImpl("Unknown", null, 0L);
       }
 
       if (Objects.isNull(this.addressInfo)) {
-        throw new LicenseCreateException("Address is null!");
+        this.addressInfo = new AddressInfoImpl(
+            0,
+            0L,
+            null,
+            null,
+            List.of()
+        );
       }
 
       if (Objects.isNull(this.machineInfo)) {
-        throw new LicenseCreateException("Machine is null!");
+        this.machineInfo = new MachineInfoImpl(
+            0,
+            0L,
+            null,
+            null,
+            List.of()
+        );
       }
 
       if (Objects.isNull(this.durationInfo)) {
-        throw new LicenseCreateException("Duration is null!");
+        this.durationInfo = new DurationInfoImpl(
+            0L,
+            "",
+            null,
+            false,
+            true,
+            null
+        );
       }
 
       return new LicenseImpl(
