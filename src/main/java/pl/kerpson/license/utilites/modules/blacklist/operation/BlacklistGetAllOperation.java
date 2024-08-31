@@ -4,12 +4,13 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import pl.kerpson.license.utilites.MSecrets;
-import pl.kerpson.license.utilites.exception.IllegalStatusException;
 import pl.kerpson.license.utilites.http.HttpBuilder;
 import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.blacklist.basic.Blacklist;
 import pl.kerpson.license.utilites.modules.blacklist.basic.BlacklistReader;
+import pl.kerpson.license.utilites.status.StatusCode;
+import pl.kerpson.license.utilites.status.StatusParser;
 
 public class BlacklistGetAllOperation implements Operation<OperationResult<List<Blacklist>>> {
 
@@ -31,8 +32,9 @@ public class BlacklistGetAllOperation implements Operation<OperationResult<List<
   public OperationResult<List<Blacklist>> complete() {
     try {
       HttpResponse<String> response = this.prepareRequest().sync();
-      if (response.statusCode() == 401) {
-        return new OperationResult<>(List.of(), new IllegalStatusException(401, "You don't have permission!"));
+      StatusCode statusCode = StatusParser.parse(response);
+      if (!statusCode.isOk()) {
+        return new OperationResult<>(List.of(), statusCode.getThrowable());
       }
 
       return new OperationResult<>(BlacklistReader.readBlacklists(response), null);
@@ -45,8 +47,9 @@ public class BlacklistGetAllOperation implements Operation<OperationResult<List<
   public CompletableFuture<OperationResult<List<Blacklist>>> completeAsync() {
     return prepareRequest().async()
         .thenApply(response -> {
-          if (response.statusCode() == 401) {
-            return new OperationResult<List<Blacklist>>(List.of(), new IllegalStatusException(401, "You don't have permission!"));
+          StatusCode statusCode = StatusParser.parse(response);
+          if (!statusCode.isOk()) {
+            return new OperationResult<List<Blacklist>>(List.of(), statusCode.getThrowable());
           }
 
           return new OperationResult<>(BlacklistReader.readBlacklists(response), null);

@@ -3,10 +3,11 @@ package pl.kerpson.license.utilites.modules.blacklist.operation;
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import pl.kerpson.license.utilites.MSecrets;
-import pl.kerpson.license.utilites.exception.LicenseUpdateException;
 import pl.kerpson.license.utilites.http.HttpBuilder;
 import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
+import pl.kerpson.license.utilites.status.StatusCode;
+import pl.kerpson.license.utilites.status.StatusParser;
 
 public class BlacklistDeleteOperation implements Operation<OperationResult<Boolean>> {
 
@@ -28,12 +29,9 @@ public class BlacklistDeleteOperation implements Operation<OperationResult<Boole
   public OperationResult<Boolean> complete() {
     try {
       HttpResponse<String> response = this.prepareRequest().sync();
-      if (response.statusCode() == 401) {
-        return new OperationResult<>(false, new LicenseUpdateException("You don't have permission to create licenses."));
-      }
-
-      if (response.statusCode() == 404) {
-        return new OperationResult<>(false, new LicenseUpdateException("License not found."));
+      StatusCode statusCode = StatusParser.parse(response);
+      if (!statusCode.isOk()) {
+        return new OperationResult<>(false, statusCode.getThrowable());
       }
 
       return new OperationResult<>(true, null);
@@ -45,12 +43,9 @@ public class BlacklistDeleteOperation implements Operation<OperationResult<Boole
   @Override
   public CompletableFuture<OperationResult<Boolean>> completeAsync() {
     return prepareRequest().async().thenApply(response -> {
-      if (response.statusCode() == 401) {
-        return new OperationResult<>(false, new LicenseUpdateException("You don't have permission to create licenses."));
-      }
-
-      if (response.statusCode() == 404) {
-        return new OperationResult<>(false, new LicenseUpdateException("License not found."));
+      StatusCode statusCode = StatusParser.parse(response);
+      if (!statusCode.isOk()) {
+        return new OperationResult<>(false, statusCode.getThrowable());
       }
 
       return new OperationResult<>(true, null);
