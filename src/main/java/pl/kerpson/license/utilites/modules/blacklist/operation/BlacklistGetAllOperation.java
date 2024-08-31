@@ -35,7 +35,7 @@ public class BlacklistGetAllOperation implements Operation<OperationResult<List<
         return new OperationResult<>(List.of(), new IllegalStatusException(401, "You don't have permission!"));
       }
 
-      return new OperationResult<>(BlacklistReader.readBlacklist(response), null);
+      return new OperationResult<>(BlacklistReader.readBlacklists(response), null);
     } catch (Exception exception) {
       return new OperationResult<>(List.of(), exception);
     }
@@ -49,7 +49,7 @@ public class BlacklistGetAllOperation implements Operation<OperationResult<List<
             return new OperationResult<List<Blacklist>>(List.of(), new IllegalStatusException(401, "You don't have permission!"));
           }
 
-          return new OperationResult<>(BlacklistReader.readBlacklist(response), null);
+          return new OperationResult<>(BlacklistReader.readBlacklists(response), null);
         })
         .exceptionally(exception -> new OperationResult<>(List.of(), exception));
   }

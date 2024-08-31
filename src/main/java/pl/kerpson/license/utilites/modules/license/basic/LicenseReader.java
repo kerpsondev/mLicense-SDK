@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-import pl.kerpson.license.utilites.filter.JsonFilter;
 import pl.kerpson.license.utilites.modules.license.basic.License.AddressInfo.Request;
 import pl.kerpson.license.utilites.modules.license.basic.License.MachineInfo;
 import pl.kerpson.license.utilites.modules.license.basic.LicenseImpl.AddressInfoImpl;
@@ -37,12 +36,6 @@ public final class LicenseReader {
     Gson gson = new Gson();
     JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
     return LicenseReader.readLicense(jsonObject);
-  }
-
-  public static License readLicense(HttpResponse<String> response, JsonFilter filter) {
-    Gson gson = new Gson();
-    JsonArray jsonArray = gson.fromJson(response.body(), JsonArray.class);
-    return filter.applySingle(jsonArray, LicenseReader::readLicense);
   }
 
   public static License readLicense(JsonObject jsonObject) {

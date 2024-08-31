@@ -78,7 +78,7 @@ public class HttpBuilder {
       }
     }
 
-    if (Objects.nonNull(this.endpointType) && Objects.nonNull(this.body)) {
+    if (Objects.nonNull(this.endpointType)) {
       this.endpointType.getConsumer().accept(builder, this.body);
     }
 
@@ -97,10 +97,10 @@ public class HttpBuilder {
 
   enum EndpointType {
 
-    GET((builder, body) -> {}),
+    GET((builder, body) -> builder.GET()),
     PUT((builder, body) -> builder.PUT(HttpRequest.BodyPublishers.ofString(body))),
     POST((builder, body) -> builder.POST(HttpRequest.BodyPublishers.ofString(body))),
-    DELETE((builder, body) -> {});
+    DELETE((builder, body) -> builder.DELETE());
 
     private final BiConsumer<Builder, String> consumer;
 
