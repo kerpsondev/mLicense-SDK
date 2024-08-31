@@ -39,7 +39,7 @@ public class HttpBuilder {
     return new HttpBuilder(EndpointType.GET);
   }
 
-  private HttpBuilder(EndpointType endpointType) {
+  private HttpBuilder(@NotNull EndpointType endpointType) {
     this.endpointType = endpointType;
   }
 
@@ -78,10 +78,7 @@ public class HttpBuilder {
       }
     }
 
-    if (Objects.nonNull(this.endpointType)) {
-      this.endpointType.getConsumer().accept(builder, this.body);
-    }
-
+    this.endpointType.getConsumer().accept(builder, this.body);
     return builder.build();
   }
 
