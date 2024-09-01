@@ -5,8 +5,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>pl.kerpson.utilities.license</groupId>
-  <artifactId>license-utilities</artifactId>
-  <version>1.0.0-BETA3</version>
+  <artifactId>mLicense-SDK</artifactId>
+  <version>1.0.1</version>
 
   <properties>
     <mavens.deploy.skip>false</mavens.deploy.skip>
