@@ -10,22 +10,22 @@ import org.jetbrains.annotations.Nullable;
 
 class LicenseImpl implements License {
 
-  private final int id;
+  private final long id;
   private final String key;
-  private final int productId;
+  private final long productId;
   private final String description;
-  private final int assignedUserId;
+  private final long assignedUserId;
   private final ClientInfo clientInfo;
   private final AddressInfo addressInfo;
   private final MachineInfo machineInfo;
   private final DurationInfo durationInfo;
 
   protected LicenseImpl(
-      int id,
+      long id,
       @NotNull String key,
-      int productId,
+      long productId,
       @Nullable String description,
-      int assignedUserId,
+      long assignedUserId,
       @NotNull ClientInfo clientInfo,
       @NotNull AddressInfo addressInfo,
       @NotNull MachineInfo machineInfo,
@@ -43,7 +43,7 @@ class LicenseImpl implements License {
   }
 
   @Override
-  public int getId() {
+  public long getId() {
     return id;
   }
 
@@ -53,7 +53,7 @@ class LicenseImpl implements License {
   }
 
   @Override
-  public int getProductId() {
+  public long getProductId() {
     return productId;
   }
 
@@ -63,7 +63,7 @@ class LicenseImpl implements License {
   }
 
   @Override
-  public int getAssignedUserId() {
+  public long getAssignedUserId() {
     return assignedUserId;
   }
 
@@ -316,8 +316,8 @@ class LicenseImpl implements License {
 
   static class BuilderImpl implements Builder {
 
-    private int id;
-    private int productId;
+    private long id;
+    private long productId;
     private String key;
     private String description;
     private ClientInfo clientInfo;
@@ -328,13 +328,13 @@ class LicenseImpl implements License {
     protected BuilderImpl() {}
 
     @Override
-    public Builder setId(int id) {
+    public Builder setId(long id) {
       this.id = id;
       return this;
     }
 
     @Override
-    public Builder setProductId(int productId) {
+    public Builder setProductId(long productId) {
       this.productId = productId;
       return this;
     }

@@ -8,9 +8,9 @@ public interface Module<T> {
 
   Operation<OperationResult<Boolean>> update(T t);
 
-  Operation<OperationResult<Boolean>> delete(int id);
+  Operation<OperationResult<Boolean>> delete(long id);
 
-  Operation<OperationResult<T>> get(int id);
+  Operation<OperationResult<T>> get(long id);
 
   Operation<OperationResult<List<T>>> getAll();
 }

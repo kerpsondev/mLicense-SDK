@@ -9,7 +9,7 @@ public interface Blacklist {
     return new BuilderImpl();
   }
 
-  int getId();
+  long getId();
 
   @NotNull String getValue();
 
@@ -19,7 +19,7 @@ public interface Blacklist {
 
   @NotNull Type getType();
 
-  int getAssignedUserId();
+  long getAssignedUserId();
 
   String buildJsonForUpdate();
 
@@ -33,7 +33,7 @@ public interface Blacklist {
 
   interface Builder {
 
-    Builder setId(int id);
+    Builder setId(long id);
 
     Builder setValue(@NotNull String value);
 

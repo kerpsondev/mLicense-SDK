@@ -21,7 +21,7 @@ class LicenseModuleImpl implements LicenseModule {
   }
 
   @Override
-  public Operation<OperationResult<Boolean>> delete(int id) {
+  public Operation<OperationResult<Boolean>> delete(long id) {
     return new LicenseDeleteOperation(MURL.licenses().delete(id), this.secrets);
   }
 
@@ -41,7 +41,7 @@ class LicenseModuleImpl implements LicenseModule {
   }
 
   @Override
-  public Operation<OperationResult<License>> get(int id) {
+  public Operation<OperationResult<License>> get(long id) {
     return new LicenseGetOperation(MURL.licenses().getId(id), this.secrets);
   }
 

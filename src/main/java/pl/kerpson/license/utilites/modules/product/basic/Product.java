@@ -10,7 +10,7 @@ public interface Product {
     return new BuilderImpl();
   }
 
-  int getId();
+  long getId();
 
   @NotNull String getName();
 
@@ -18,7 +18,7 @@ public interface Product {
 
   @NotNull String createdAt();
 
-  int getAssignedUserId();
+  long getAssignedUserId();
 
   @Nullable String getBuiltByBitResourceId();
 
@@ -28,7 +28,7 @@ public interface Product {
 
   interface Builder {
 
-    Builder setId(int id);
+    Builder setId(long id);
 
     Builder setName(@NotNull String name);
 

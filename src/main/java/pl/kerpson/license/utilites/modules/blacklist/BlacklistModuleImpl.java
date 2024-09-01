@@ -31,12 +31,12 @@ class BlacklistModuleImpl implements BlacklistModule {
   }
 
   @Override
-  public Operation<OperationResult<Boolean>> delete(int id) {
+  public Operation<OperationResult<Boolean>> delete(long id) {
     return new BlacklistDeleteOperation(MURL.blacklists().delete(id), this.secrets);
   }
 
   @Override
-  public Operation<OperationResult<Blacklist>> get(int id) {
+  public Operation<OperationResult<Blacklist>> get(long id) {
     return new BlacklistGetOperation(MURL.blacklists().getId(id), this.secrets);
   }
 

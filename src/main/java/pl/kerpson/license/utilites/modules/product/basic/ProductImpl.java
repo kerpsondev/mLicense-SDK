@@ -7,19 +7,19 @@ import org.jetbrains.annotations.Nullable;
 
 class ProductImpl implements Product {
 
-  private final int id;
+  private final long id;
   private final String name;
   private final String version;
   private final String createdAt;
-  private final int assignedUserId;
+  private final long assignedUserId;
   private final String builtByBitResourceId;
 
   protected ProductImpl(
-      int id,
+      long id,
       @NotNull String name,
       @NotNull String version,
       @NotNull String createdAt,
-      int assignedUserId,
+      long assignedUserId,
       @Nullable String builtByBitResourceId
   ) {
     this.id = id;
@@ -31,7 +31,7 @@ class ProductImpl implements Product {
   }
 
   @Override
-  public int getId() {
+  public long getId() {
     return id;
   }
 
@@ -51,7 +51,7 @@ class ProductImpl implements Product {
   }
 
   @Override
-  public int getAssignedUserId() {
+  public long getAssignedUserId() {
     return assignedUserId;
   }
 
@@ -81,12 +81,12 @@ class ProductImpl implements Product {
 
   static class BuilderImpl implements Builder {
 
-    private int id;
+    private long id;
     private String name;
     private String version;
 
     @Override
-    public Builder setId(int id) {
+    public Builder setId(long id) {
       this.id = id;
       return this;
     }
