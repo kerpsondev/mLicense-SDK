@@ -18,7 +18,7 @@ public class ProductsURL extends MURL {
   }
 
   @Override
-  public String getId(int id) {
+  public String getId(long id) {
     return String.format("https://api.mlicense.net/api/v1/products/id?id=%s", id);
   }
 
@@ -32,7 +32,7 @@ public class ProductsURL extends MURL {
   }
 
   @Override
-  public String delete(int id) {
+  public String delete(long id) {
     return String.format("https://api.mlicense.net/api/v1/products?id=%s", id);
   }
 }

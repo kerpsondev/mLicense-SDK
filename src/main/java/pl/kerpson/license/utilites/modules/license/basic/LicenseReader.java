@@ -40,11 +40,11 @@ public final class LicenseReader {
 
   public static License readLicense(JsonObject jsonObject) {
     return new LicenseImpl(
-        jsonObject.get("id").getAsInt(),
+        jsonObject.get("id").getAsLong(),
         jsonObject.get("key").getAsString(),
         jsonObject.get("productId").getAsInt(),
         JsonUtil.getValue("description", null, JsonElement::getAsString, jsonObject),
-        jsonObject.get("assignedUserId").getAsInt(),
+        jsonObject.get("assignedUserId").getAsLong(),
         LicenseReader.readClientInfo(jsonObject),
         LicenseReader.readAddressInfo(jsonObject),
         LicenseReader.readMachineInfo(jsonObject),

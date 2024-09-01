@@ -18,7 +18,7 @@ public class BlacklistsURL extends MURL {
   }
 
   @Override
-  public String getId(int id) {
+  public String getId(long id) {
     return String.format("https://api.mlicense.net/api/v1/blacklists/id?id=%s", id);
   }
 
@@ -28,7 +28,7 @@ public class BlacklistsURL extends MURL {
   }
 
   @Override
-  public String delete(int id) {
+  public String delete(long id) {
     return String.format("https://api.mlicense.net/api/v1/blacklists?id=%s", id);
   }
 }

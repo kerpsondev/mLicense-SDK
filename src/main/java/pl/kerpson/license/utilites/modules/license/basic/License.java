@@ -16,15 +16,15 @@ public interface License {
     return KeyGenerator.generateLicenseKey();
   }
 
-  int getId();
+  long getId();
 
   @NotNull String getKey();
 
-  int getProductId();
+  long getProductId();
 
   @Nullable String getDescription();
 
-  int getAssignedUserId();
+  long getAssignedUserId();
 
   @NotNull ClientInfo getClient();
 
@@ -130,9 +130,9 @@ public interface License {
 
   interface Builder {
 
-    Builder setId(int id);
+    Builder setId(long id);
 
-    Builder setProductId(int productId);
+    Builder setProductId(long productId);
 
     Builder setKey(@NotNull String key);
 

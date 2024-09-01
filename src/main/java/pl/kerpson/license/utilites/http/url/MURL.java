@@ -30,11 +30,11 @@ public abstract class MURL {
 
   public abstract String getAll();
 
-  public abstract String getId(int id);
+  public abstract String getId(long id);
 
   public abstract String update();
 
-  public abstract String delete(int id);
+  public abstract String delete(long id);
 
   private static void setupUrls() {
     LICENSES_URL = new LicensesURL();

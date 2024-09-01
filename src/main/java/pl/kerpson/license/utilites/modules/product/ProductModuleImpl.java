@@ -21,7 +21,7 @@ class ProductModuleImpl implements ProductModule {
   }
 
   @Override
-  public Operation<OperationResult<Boolean>> delete(int id) {
+  public Operation<OperationResult<Boolean>> delete(long id) {
     return new ProductDeleteOperation(MURL.products().delete(id), this.secrets);
   }
 
@@ -36,7 +36,7 @@ class ProductModuleImpl implements ProductModule {
   }
 
   @Override
-  public Operation<OperationResult<Product>> get(int id) {
+  public Operation<OperationResult<Product>> get(long id) {
     return new ProductGetOperation(MURL.products().getId(id), this.secrets);
   }
 

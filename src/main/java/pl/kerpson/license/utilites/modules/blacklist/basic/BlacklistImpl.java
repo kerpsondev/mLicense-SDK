@@ -6,20 +6,20 @@ import org.jetbrains.annotations.NotNull;
 
 class BlacklistImpl implements Blacklist {
 
-  private final int id;
+  private final long id;
   private final String value;
   private final int requests;
   private final String createdAt;
   private final Type type;
-  private final int assignedUserId;
+  private final long assignedUserId;
 
   protected BlacklistImpl(
-      int id,
+      long id,
       @NotNull String value,
       int requests,
       @NotNull String createdAt,
       @NotNull Type type,
-      int assignedUserId
+      long assignedUserId
   ) {
     this.id = id;
     this.value = value;
@@ -30,7 +30,7 @@ class BlacklistImpl implements Blacklist {
   }
 
   @Override
-  public int getId() {
+  public long getId() {
     return id;
   }
 
@@ -55,7 +55,7 @@ class BlacklistImpl implements Blacklist {
   }
 
   @Override
-  public int getAssignedUserId() {
+  public long getAssignedUserId() {
     return assignedUserId;
   }
 
@@ -80,12 +80,12 @@ class BlacklistImpl implements Blacklist {
 
   static class BuilderImpl implements Builder {
 
-    private int id;
+    private long id;
     private String value;
     private Type type;
 
     @Override
-    public Builder setId(int id) {
+    public Builder setId(long id) {
       this.id = id;
       return this;
     }
@@ -104,7 +104,14 @@ class BlacklistImpl implements Blacklist {
 
     @Override
     public Blacklist build() {
-      return new BlacklistImpl(this.id, this.value, 0, StringUtils.EMPTY, this.type, 0);
+      return new BlacklistImpl(
+          this.id,
+          this.value,
+          0,
+          StringUtils.EMPTY,
+          this.type,
+          0L
+      );
     }
   }
 }

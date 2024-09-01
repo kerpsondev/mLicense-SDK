@@ -34,11 +34,11 @@ public final class ProductReader {
 
   public static Product readProduct(JsonObject jsonObject) {
     return new ProductImpl(
-        jsonObject.get("id").getAsInt(),
+        jsonObject.get("id").getAsLong(),
         jsonObject.get("name").getAsString(),
         jsonObject.get("version").getAsString(),
         jsonObject.get("createdAt").getAsString(),
-        jsonObject.get("assignedUserId").getAsInt(),
+        jsonObject.get("assignedUserId").getAsLong(),
         JsonUtil.getValue("builtByBitResourceId", null, JsonElement::getAsString, jsonObject)
     );
   }
