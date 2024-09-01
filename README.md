@@ -13,9 +13,6 @@ Api has few modules:
 All operations can be performed synchronously as well as asynchronously.
 <br>
 
-> [!WARNING]  
-> Currently delete do not work due to errors on the mLicense side.
-
 ## 💙 Lets start
 
 Add api to your project by maven or gradle.
