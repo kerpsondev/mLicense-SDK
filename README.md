@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/v/release/kerpsondev/mLicense-SDK.svg)](https://github.com/kerpsondev/mLicense-SDK/releases)
 
-Api allows you to connect to the mLicense system and easily use its capabilities from within your app!
+Java api allows you to connect to the mLicense system and easily use its capabilities from within your app!
 
 Api has few modules:
 1. Validity
