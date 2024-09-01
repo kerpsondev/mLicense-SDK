@@ -48,7 +48,7 @@ implementation("pl.kerpson.utilities.license:mLicense-SDK:1.0.1")
 ```
 <br>
 
-Once LicenseUtilities is added, we can move on to creating an instance of MLicense.
+Once mLicense-SDK is added, we can move on to creating an instance of MLicense.
 ```java
 MLicense license = MLicense.builder()
     .key(API_KEY)
