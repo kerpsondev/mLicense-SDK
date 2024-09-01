@@ -6,7 +6,7 @@
 
   <groupId>pl.kerpson.utilities.license</groupId>
   <artifactId>license-utilities</artifactId>
-  <version>1.0.0-BETA2</version>
+  <version>1.0.0-BETA3</version>
 
   <properties>
     <mavens.deploy.skip>false</mavens.deploy.skip>
