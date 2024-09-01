@@ -176,4 +176,4 @@ blacklistModule.update(blacklist).complete(); //Update blacklist
 ```
 
 ### 💙 Project status
-![Stats](https://repobeats.axiom.co/api/embed/7c5e187235db0a723ad80ba3d054532d627fce94.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/d8dea05a60bd8ad22f39a69a46955d7eceda5f12.svg "Repobeats analytics image")
