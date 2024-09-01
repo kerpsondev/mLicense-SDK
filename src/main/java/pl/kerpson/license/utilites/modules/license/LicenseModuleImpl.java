@@ -2,6 +2,7 @@ package pl.kerpson.license.utilites.modules.license;
 
 import java.util.List;
 import pl.kerpson.license.utilites.MSecrets;
+import pl.kerpson.license.utilites.http.url.MURL;
 import pl.kerpson.license.utilites.modules.Operation;
 import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.license.basic.License;
@@ -13,12 +14,6 @@ import pl.kerpson.license.utilites.modules.license.operation.LicenseUpdateOperat
 
 class LicenseModuleImpl implements LicenseModule {
 
-  private final static String LICENSES_CREATE_URL = "https://api.mlicense.net/api/v1/licenses";
-  private final static String LICENSES_ALL_URL = "https://api.mlicense.net/api/v1/licenses/all";
-  private final static String LICENSES_ID_URL = "https://api.mlicense.net/api/v1/licenses/id?id=%s";
-  private final static String LICENSES_DELETE_URL = "https://api.mlicense.net/api/v1/licenses?id=%s";
-  private final static String LICENSES_KEY_URL = "https://api.mlicense.net/api/v1/licenses/key?key=%s";
-
   private final MSecrets secrets;
 
   protected LicenseModuleImpl(MSecrets secrets) {
@@ -27,31 +22,31 @@ class LicenseModuleImpl implements LicenseModule {
 
   @Override
   public Operation<OperationResult<Boolean>> delete(int id) {
-    return new LicenseDeleteOperation(String.format(LICENSES_DELETE_URL, id), this.secrets);
+    return new LicenseDeleteOperation(MURL.licenses().delete(id), this.secrets);
   }
 
   @Override
   public Operation<OperationResult<Boolean>> create(License license) {
-    return new LicenseCreateOperation(LICENSES_CREATE_URL, this.secrets, license);
+    return new LicenseCreateOperation(MURL.licenses().create(), this.secrets, license);
   }
 
   @Override
   public Operation<OperationResult<Boolean>> update(License license) {
-    return new LicenseUpdateOperation(LICENSES_CREATE_URL, this.secrets, license);
+    return new LicenseUpdateOperation(MURL.licenses().update(), this.secrets, license);
   }
 
   @Override
   public Operation<OperationResult<License>> get(String key) {
-    return new LicenseGetOperation(String.format(LICENSES_KEY_URL, key), this.secrets);
+    return new LicenseGetOperation(MURL.licenses().getKey(key), this.secrets);
   }
 
   @Override
   public Operation<OperationResult<License>> get(int id) {
-    return new LicenseGetOperation(String.format(LICENSES_ID_URL, id), this.secrets);
+    return new LicenseGetOperation(MURL.licenses().getId(id), this.secrets);
   }
 
   @Override
   public Operation<OperationResult<List<License>>> getAll() {
-    return new LicenseGetAllOperation(LICENSES_ALL_URL, this.secrets);
+    return new LicenseGetAllOperation(MURL.licenses().getAll(), this.secrets);
   }
 }
