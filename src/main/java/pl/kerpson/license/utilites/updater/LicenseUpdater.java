@@ -8,7 +8,7 @@ import pl.kerpson.license.utilites.http.HttpBuilder;
 
 public final class LicenseUpdater {
 
-  private final static String CURRENT_VERSION = "1.0.0-beta3";
+  private final static String CURRENT_VERSION = "1.0.1";
 
   private LicenseUpdater() {}
 
