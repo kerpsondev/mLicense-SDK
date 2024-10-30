@@ -1,17 +1,23 @@
 package pl.kerpson.license.utilites.http.url;
 
+import pl.kerpson.license.utilites.http.url.impl.AddonsURL;
 import pl.kerpson.license.utilites.http.url.impl.BlacklistsURL;
 import pl.kerpson.license.utilites.http.url.impl.LicensesURL;
 import pl.kerpson.license.utilites.http.url.impl.ProductsURL;
 
 public abstract class MURL {
 
+  private static MURL ADDONS_URL;
   private static MURL LICENSES_URL;
   private static MURL PRODUCTS_URL;
   private static MURL BLACKLISTS_URL;
 
   static {
     MURL.setupUrls();
+  }
+
+  public static AddonsURL addons() {
+    return (AddonsURL) ADDONS_URL;
   }
 
   public static LicensesURL licenses() {
@@ -37,6 +43,7 @@ public abstract class MURL {
   public abstract String delete(long id);
 
   private static void setupUrls() {
+    ADDONS_URL = new AddonsURL();
     LICENSES_URL = new LicensesURL();
     PRODUCTS_URL = new ProductsURL();
     BLACKLISTS_URL = new BlacklistsURL();

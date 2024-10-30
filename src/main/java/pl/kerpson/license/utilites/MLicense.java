@@ -1,8 +1,9 @@
 package pl.kerpson.license.utilites;
 
 import java.util.concurrent.CompletableFuture;
-import pl.kerpson.license.utilites.exception.ModuleDisabledException;
+import org.jetbrains.annotations.NotNull;
 import pl.kerpson.license.utilites.modules.OperationResult;
+import pl.kerpson.license.utilites.validation.LicenseResult;
 
 public interface MLicense {
 
@@ -12,9 +13,9 @@ public interface MLicense {
     return new MBuilderImpl();
   }
 
-  OperationResult<Boolean> checkLicense(String key, String product, String version);
+  OperationResult<LicenseResult> checkLicense(@NotNull String key, @NotNull String product, @NotNull String version);
 
-  CompletableFuture<OperationResult<Boolean>> checkLicenseAsync(String key, String product, String version);
+  CompletableFuture<OperationResult<LicenseResult>> checkLicenseAsync(@NotNull String key, @NotNull String product, @NotNull String version);
 
-  <T> T getModule(Class<T> clazz) throws ModuleDisabledException;
+  <T> T getModule(@NotNull Class<T> clazz);
 }

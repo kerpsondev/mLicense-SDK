@@ -1,6 +1,5 @@
 package pl.kerpson.license.utilites;
 
-import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 import pl.kerpson.license.utilites.exception.MLicenseBuilderException;
 import pl.kerpson.license.utilites.logger.LoggerProvider;
@@ -13,20 +12,26 @@ class MBuilderImpl implements MBuilder {
   private LoggerProvider logger = LoggerProvider.DEFAULT_LOGGER;
 
   @Override
-  public MBuilderImpl key(@NotNull String key) {
-    this.secrets.setKey(key);
+  public MBuilderImpl secret(@NotNull String secret) {
+    this.secrets.setSecret(secret);
     return this;
   }
 
   @Override
-  public MBuilderImpl token(@NotNull String token) {
-    this.secrets.setToken(token);
+  public MBuilderImpl apiKey(@NotNull String apiKey) {
+    this.secrets.setApiKey(apiKey);
     return this;
   }
 
   @Override
-  public MBuilderImpl token(@NotNull String email, @NotNull String password) {
-    this.secrets.setToken(email, password);
+  public MBuilder responseKey(@NotNull String responseKey) {
+    this.secrets.setResponseKey(responseKey);
+    return this;
+  }
+
+  @Override
+  public MBuilder fileKey(@NotNull String fileKey) {
+    this.secrets.setFileKey(fileKey);
     return this;
   }
 
@@ -38,32 +43,15 @@ class MBuilderImpl implements MBuilder {
 
   @Override
   public MLicense produce() throws MLicenseBuilderException {
-    int emptySecrets = 0;
-    if (this.secrets.getKey().isEmpty()) {
-      this.logger.log(LogType.WARNING, "Key is empty! Validation module will not enabled.");
-      emptySecrets++;
-    }
-
-    if (Objects.nonNull(this.secrets.getLoginData())) {
-      this.secrets.parseTokenByLoginData(this.logger);
-    }
-
-    if (this.secrets.getToken().isEmpty()) {
-      this.logger.log(LogType.WARNING, "Token is empty! Modules will not be activated.");
-      emptySecrets++;
-    }
-
-    if (emptySecrets == 2) {
-      throw new MLicenseBuilderException("Key and JWT Token is empty!");
-    }
-
     this.logger.log(LogType.INFO, "ˆˆˆˆˆˆˆˆˆˆˆ  ::  ˆˆˆˆˆˆˆˆˆˆˆ");
     this.logger.log(LogType.INFO, "");
     this.logger.log(LogType.INFO, "          mLicense          ");
     this.logger.log(LogType.INFO, "   Unofficial license api   ");
     this.logger.log(LogType.INFO, "");
-    this.logger.log(LogType.INFO, String.format("Key: %s", this.secrets.getKey().isEmpty() ? "empty" : "provided"));
-    this.logger.log(LogType.INFO, String.format("Token: %s", this.secrets.getToken().isEmpty() ? "empty" : "provided"));
+    this.logger.log(LogType.INFO, String.format("Secret: %s", this.secrets.getSecret().isEmpty() ? "empty" : "provided"));
+    this.logger.log(LogType.INFO, String.format("Api key: %s", this.secrets.getApiKey().isEmpty() ? "empty" : "provided"));
+    this.logger.log(LogType.INFO, String.format("File key: %s", this.secrets.getFileKey().isEmpty() ? "empty" : "provided"));
+    this.logger.log(LogType.INFO, String.format("Response key: %s", this.secrets.getResponseKey().isEmpty() ? "empty" : "provided"));
     this.logger.log(LogType.INFO, "");
     this.logger.log(LogType.INFO, "ˆˆˆˆˆˆˆˆˆˆˆ  ::  ˆˆˆˆˆˆˆˆˆˆˆ");
 
@@ -72,7 +60,7 @@ class MBuilderImpl implements MBuilder {
       if (result.isLatest()) {
         this.logger.log(LogType.INFO, String.format("You are using latest version! (%s)", result.getLatestVersion()));
       } else {
-        this.logger.log(LogType.INFO, String.format("The new version of LicenseUtilities (%s) is available! Download from https://github.com/kerpsondev/LicenseUtilities", result.getLatestVersion()));
+        this.logger.log(LogType.WARNING, String.format("The new version of mLicense-SDK (%s) is available! Download from https://github.com/kerpsondev/mLicense-SDK", result.getLatestVersion()));
       }
     });
 

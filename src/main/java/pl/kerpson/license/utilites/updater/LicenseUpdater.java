@@ -14,7 +14,7 @@ public final class LicenseUpdater {
 
   public static CompletableFuture<Result> checkUpdate() {
     return HttpBuilder.get()
-        .url("https://api.github.com/repos/kerpsondev/LicenseUtilities/releases/latest")
+        .url("https://api.github.com/repos/kerpsondev/mLicense-SDK/releases/latest")
         .async()
         .thenApply(response -> {
           Gson gson = new Gson();

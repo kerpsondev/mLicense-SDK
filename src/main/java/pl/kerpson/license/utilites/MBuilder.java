@@ -6,11 +6,13 @@ import pl.kerpson.license.utilites.logger.LoggerProvider;
 
 public interface MBuilder {
 
-  MBuilder key(@NotNull String key);
+  MBuilder secret(@NotNull String secret);
 
-  MBuilder token(@NotNull String token);
+  MBuilder apiKey(@NotNull String apiKey);
 
-  MBuilder token(@NotNull String email, @NotNull String password);
+  MBuilder responseKey(@NotNull String responseKey);
+
+  MBuilder fileKey(@NotNull String fileKey);
 
   MBuilder logger(@NotNull LoggerProvider logger);
 

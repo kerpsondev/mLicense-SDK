@@ -3,7 +3,6 @@ package pl.kerpson.license.utilites.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.security.MessageDigest;
@@ -71,12 +70,11 @@ public final class HardwareUtil {
     Process process = runtime.exec(new String[]{"wmic", "csproduct", "get", "UUID"});
 
     String result = null;
-    try (InputStream ignored = process.getInputStream()) {
-      Scanner sc = new Scanner(process.getInputStream());
-      while (sc.hasNext()) {
-        String next = sc.next();
+    try (Scanner scanner = new Scanner(process.getInputStream())) {
+      while (!scanner.hasNext()) {
+        String next = scanner.next();
         if (next.contains("UUID")) {
-          result = sc.next().trim();
+          result = scanner.next().trim();
           break;
         }
       }
@@ -90,10 +88,10 @@ public final class HardwareUtil {
     return messageDigest.digest(data);
   }
 
-  private static  String hexStringify(byte[] data) {
+  private static String hexStringify(byte[] data) {
     StringBuilder stringBuilder = new StringBuilder();
     for (byte singleByte : data) {
-      stringBuilder.append(Integer.toString((singleByte & 0xff) + 0x100, 16).substring(1));
+      stringBuilder.append(String.format("%02x", singleByte));
     }
 
     return stringBuilder.toString();

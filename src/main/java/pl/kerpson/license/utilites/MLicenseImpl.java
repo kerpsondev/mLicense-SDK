@@ -3,13 +3,15 @@ package pl.kerpson.license.utilites;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import pl.kerpson.license.utilites.exception.ModuleDisabledException;
+import org.jetbrains.annotations.NotNull;
 import pl.kerpson.license.utilites.modules.Module;
 import pl.kerpson.license.utilites.modules.OperationResult;
-import pl.kerpson.license.utilites.modules.blacklist.BlacklistModule;
-import pl.kerpson.license.utilites.modules.license.LicenseModule;
-import pl.kerpson.license.utilites.modules.product.ProductModule;
-import pl.kerpson.license.utilites.validation.LicenseValidation;
+import pl.kerpson.license.utilites.modules.impl.addon.AddonModule;
+import pl.kerpson.license.utilites.modules.impl.blacklist.BlacklistModule;
+import pl.kerpson.license.utilites.modules.impl.license.LicenseModule;
+import pl.kerpson.license.utilites.modules.impl.product.ProductModule;
+import pl.kerpson.license.utilites.validation.BasicLicenseValidation;
+import pl.kerpson.license.utilites.validation.LicenseResult;
 
 class MLicenseImpl implements MLicense {
 
@@ -25,6 +27,7 @@ class MLicenseImpl implements MLicense {
     this.secrets = secrets;
 
     this.modules = ImmutableMap.of(
+        AddonModule.class, AddonModule.buildModule(this.secrets),
         LicenseModule.class, LicenseModule.buildModule(this.secrets),
         ProductModule.class, ProductModule.buildModule(this.secrets),
         BlacklistModule.class, BlacklistModule.buildModule(this.secrets)
@@ -32,35 +35,31 @@ class MLicenseImpl implements MLicense {
   }
 
   @Override
-  public OperationResult<Boolean> checkLicense(String key, String product, String version) {
-    LicenseValidation licenseValidation = new LicenseValidation(
+  public OperationResult<LicenseResult> checkLicense(@NotNull String key, @NotNull String product, @NotNull String version) {
+    BasicLicenseValidation basicLicenseValidation = new BasicLicenseValidation(
         key,
         product,
         version,
         this.secrets
     );
 
-    return licenseValidation.complete();
+    return basicLicenseValidation.complete();
   }
 
   @Override
-  public CompletableFuture<OperationResult<Boolean>> checkLicenseAsync(String key, String product, String version) {
-    LicenseValidation licenseValidation = new LicenseValidation(
+  public CompletableFuture<OperationResult<LicenseResult>> checkLicenseAsync(@NotNull String key, @NotNull String product, @NotNull String version) {
+    BasicLicenseValidation basicLicenseValidation = new BasicLicenseValidation(
         key,
         product,
         version,
         this.secrets
     );
 
-    return licenseValidation.completeAsync();
+    return basicLicenseValidation.completeAsync();
   }
 
   @Override
-  public <T> T getModule(Class<T> clazz) throws ModuleDisabledException {
-    if (this.secrets.getToken().isEmpty()) {
-      throw new ModuleDisabledException("Module is disabled because you don't fill token.");
-    }
-
+  public <T> T getModule(@NotNull Class<T> clazz) {
     return (T) modules.get(clazz);
   }
 }

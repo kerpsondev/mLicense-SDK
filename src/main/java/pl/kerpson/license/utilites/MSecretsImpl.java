@@ -1,78 +1,56 @@
 package pl.kerpson.license.utilites;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import java.net.http.HttpResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import pl.kerpson.license.utilites.http.HttpBuilder;
-import pl.kerpson.license.utilites.logger.LoggerProvider;
-import pl.kerpson.license.utilites.logger.LoggerProvider.LogType;
 
 class MSecretsImpl implements MSecrets {
 
-  private String key = StringUtils.EMPTY;
-  private String token = StringUtils.EMPTY;
-
-  private LoginData loginData;
+  private String secret = StringUtils.EMPTY;
+  private String apiKey = StringUtils.EMPTY;
+  private String fileKey = StringUtils.EMPTY;
+  private String responseKey = StringUtils.EMPTY;
 
   @Override
-  public @NotNull String getKey() {
-    return key;
+  public @NotNull String getSecret() {
+    return secret;
   }
 
   @Override
-  public MSecrets setKey(@NotNull String key) {
-    this.key = key;
+  public MSecrets setSecret(@NotNull String secret) {
+    this.secret = secret;
     return this;
   }
 
   @Override
-  public @NotNull String getToken() {
-    return token;
+  public @NotNull String getApiKey() {
+    return apiKey;
   }
 
   @Override
-  public MSecrets setToken(@NotNull String token) {
-    this.token = token;
+  public MSecrets setApiKey(@NotNull String apiKey) {
+    this.apiKey = apiKey;
     return this;
   }
 
   @Override
-  public MSecrets setToken(@NotNull String email, @NotNull String password) {
-    this.loginData = new LoginData(email, password);
+  public @NotNull String getResponseKey() {
+    return responseKey;
+  }
+
+  @Override
+  public MSecrets setResponseKey(@NotNull String responseKey) {
+    this.responseKey = responseKey;
     return this;
   }
 
   @Override
-  public @Nullable LoginData getLoginData() {
-    return loginData;
+  public @NotNull String getFileKey() {
+    return fileKey;
   }
 
   @Override
-  public void parseTokenByLoginData(LoggerProvider logger) {
-    try {
-      JsonObject requestBody = new JsonObject();
-      requestBody.addProperty("email", this.loginData.getEmail());
-      requestBody.addProperty("password", this.loginData.getPassword());
-
-      HttpResponse<String> response = HttpBuilder.post()
-          .url("https://api.mlicense.net/api/v1/auth/authenticate")
-          .body(requestBody.toString())
-          .sync();
-
-      JsonElement responseElement = JsonParser.parseString(response.body());
-      if (responseElement.isJsonNull()) {
-        logger.log(LogType.WARNING, "Invalid email or password! JWT Token is empty.");
-        return;
-      }
-
-      JsonObject responseData = responseElement.getAsJsonObject();
-      this.token = responseData.get("jwt").getAsString();
-    } catch (Exception exception) {
-      logger.log(LogType.ERROR, "Error while sending http request!", exception);
-    }
+  public MSecrets setFileKey(@NotNull String fileKey) {
+    this.fileKey = fileKey;
+    return this;
   }
 }

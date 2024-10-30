@@ -1,41 +1,22 @@
 package pl.kerpson.license.utilites;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import pl.kerpson.license.utilites.logger.LoggerProvider;
 
 public interface MSecrets {
 
-  @NotNull String getKey();
+  @NotNull String getSecret();
 
-  MSecrets setKey(@NotNull String key);
+  MSecrets setSecret(@NotNull String secret);
 
-  @NotNull String getToken();
+  @NotNull String getApiKey();
 
-  MSecrets setToken(@NotNull String token);
+  MSecrets setApiKey(@NotNull String apikey);
 
-  MSecrets setToken(@NotNull String email, @NotNull String password);
+  @NotNull String getResponseKey();
 
-  @Nullable LoginData getLoginData();
+  MSecrets setResponseKey(@NotNull String responseKey);
 
-  void parseTokenByLoginData(LoggerProvider logger);
+  @NotNull String getFileKey();
 
-  class LoginData {
-
-    private final String email;
-    private final String password;
-
-    public LoginData(@NotNull String email, @NotNull String password) {
-      this.email = email;
-      this.password = password;
-    }
-
-    public @NotNull String getEmail() {
-      return email;
-    }
-
-    public @NotNull String getPassword() {
-      return password;
-    }
-  }
+  MSecrets setFileKey(@NotNull String fileKey);
 }

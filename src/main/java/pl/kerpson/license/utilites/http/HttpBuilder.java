@@ -54,8 +54,8 @@ public class HttpBuilder {
     return this;
   }
 
-  public HttpBuilder bearer(@NotNull String authorizationKey) {
-    this.authorizationType = AuthorizationType.BEARER;
+  public HttpBuilder apiKey(@NotNull String authorizationKey) {
+    this.authorizationType = AuthorizationType.API_KEY;
     this.authorizationKey = authorizationKey;
     return this;
   }
@@ -74,7 +74,7 @@ public class HttpBuilder {
       if (this.authorizationType == AuthorizationType.AUTHORIZATION) {
         builder.header("Authorization", this.authorizationKey);
       } else {
-        builder.header("Authorization", String.format("Bearer %s", this.authorizationKey));
+        builder.header("X-API-KEY", this.authorizationKey);
       }
     }
 
@@ -87,9 +87,19 @@ public class HttpBuilder {
     return client.send(request, HttpResponse.BodyHandlers.ofString());
   }
 
+  public HttpResponse<byte[]> syncByte() throws IOException, InterruptedException {
+    HttpRequest request = this.buildRequest();
+    return client.send(request, HttpResponse.BodyHandlers.ofByteArray());
+  }
+
   public CompletableFuture<HttpResponse<String>> async() {
     HttpRequest request = this.buildRequest();
     return client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+  }
+
+  public CompletableFuture<HttpResponse<byte[]>> asyncByte() {
+    HttpRequest request = this.buildRequest();
+    return client.sendAsync(request, HttpResponse.BodyHandlers.ofByteArray());
   }
 
   enum EndpointType {
@@ -112,7 +122,7 @@ public class HttpBuilder {
 
   enum AuthorizationType {
 
-    BEARER,
+    API_KEY,
     AUTHORIZATION
   }
 }
