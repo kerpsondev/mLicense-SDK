@@ -117,6 +117,7 @@ try {
     // Do somethink
     // Other modules example
     ProductModule productModule = license.getModule(ProductModule.class);
+    AddonModule addonModule = license.getModule(AddonModule.class);
     BlacklistModule blacklistModule = license.getModule(BlacklistModule.class);
 } catch (ModuleDisabledException ignored) {} // Exception is triggered when the JWT token is not specified
 ```
@@ -158,14 +159,14 @@ productModule.update(product).complete(); //Update product
 ### 💙 Addon object.
 ```java
 Addon addon = Addon.createAddon()
-    .setId(0) // Set the product id only when you want to update it, not create it.
+    .setId(0) // Set the addon id only when you want to update it, not create it.
     .setName(ADDON_NAME)
     .setVersion(VERSION)
     .setProducts(List.of(PRODUCTS_ID))
     .build();
 
-productModule.create(product).complete(); //Create product
-productModule.update(product).complete(); //Update product
+addonModule.create(addon).complete(); //Create addon
+addonModule.update(addon).complete(); //Update addon
 ```
 
 ### 💙 Blacklist object.
