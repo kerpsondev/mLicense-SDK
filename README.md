@@ -103,11 +103,12 @@ CompletableFuture<OperationResult<LicenseResult>> resultAsync = license.checkLic
 
 ### 💙 Other modules
 
-As I mentioned, the api currently has 4 modules (including validation).
+As I mentioned, the api currently has 5 modules (including validation).
 
 1. LicenseModule
 2. ProductModule
-3. BlacklistModule
+3. AddonModule
+4. BlacklistModule
 
 ```java
 try {
