@@ -51,24 +51,14 @@ implementation("pl.kerpson.utilities.license:mLicense-SDK:1.0.2-BETA1")
 Once mLicense-SDK is added, we can move on to creating an instance of MLicense.
 ```java
 MLicense license = MLicense.builder()
-    .key(API_KEY)
-    .token(JWT_TOKEN)
+    .secret(SECRET)
+    .apiKey(API_KEY)
     .logger(LOGGER_PROVIDER) // Optional
     .produce();
 ```
 
-- What is API_KEY? This is the key that allows you to use the check validation module.
-- What is JWT_TOKEN? Token allows you to use the other modules (that's it in a nutshell).
-
-We can also obtain a JWT token by providing your email and password for your mLicense account.
-
-```java
-MLicense license = MLicense.builder()
-    .key(API_KEY)
-    .token("example@mail.com", "examplePassword")
-    .logger(LOGGER_PROVIDER) // Optional
-    .produce();
-```
+- What is secret? This is the key that allows you to use the check validation module.
+- What is apiKey? Token allows you to use the other modules (that's it in a nutshell).
 
 Not bad, we created an mLicense instance!
 <br>
@@ -96,14 +86,14 @@ I'm not boring anymore, let's move on to examples.
 
 ```java
 // Sync operation
-OperationResult<Boolean> result = license.checkLicense(
+OperationResult<LicenseResult> result = license.checkLicense(
     KEY,
     PRODUCT,
     VERSION
 );
 
 // Async operation
-CompletableFuture<OperationResult<Boolean>> resultAsync = license.checkLicenseAsync(
+CompletableFuture<OperationResult<LicenseResult>> resultAsync = license.checkLicenseAsync(
     KEY,
     PRODUCT,
     VERSION
@@ -158,6 +148,19 @@ Product product = Product.createProduct()
     .setId(0) // Set the product id only when you want to update it, not create it.
     .setName(PRODUCT_NAME)
     .setVersion(VERSION)
+    .build();
+
+productModule.create(product).complete(); //Create product
+productModule.update(product).complete(); //Update product
+```
+
+### 💙 Addon object.
+```java
+Addon addon = Addon.createAddon()
+    .setId(0) // Set the product id only when you want to update it, not create it.
+    .setName(ADDON_NAME)
+    .setVersion(VERSION)
+    .setProducts(List.of(PRODUCTS_ID))
     .build();
 
 productModule.create(product).complete(); //Create product
