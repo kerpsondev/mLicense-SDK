@@ -8,7 +8,8 @@ Api has few modules:
 1. Validity
 2. Licenses
 3. Products
-4. Blacklists
+4. Addons
+5. Blacklists
    
 All operations can be performed synchronously as well as asynchronously.
 <br>
