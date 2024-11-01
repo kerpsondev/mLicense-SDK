@@ -1,7 +1,5 @@
 package pl.kerpson.license.utilites.validation;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.net.http.HttpResponse;
@@ -15,11 +13,6 @@ import pl.kerpson.license.utilites.util.HardwareUtil;
 import pl.kerpson.license.utilites.util.ValidationUtil;
 
 public class BasicLicenseValidation extends LicenseValidation<HttpResponse<String>, LicenseResult> {
-
-  private static final Gson GSON = new GsonBuilder()
-      .setPrettyPrinting()
-      .disableHtmlEscaping()
-      .create();
 
   private final String key;
   private final String product;

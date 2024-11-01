@@ -13,7 +13,7 @@ class BlacklistImpl implements Blacklist {
   private final Type type;
   private final long assignedUserId;
 
-  protected BlacklistImpl(
+  BlacklistImpl(
       long id,
       @NotNull String value,
       int requests,

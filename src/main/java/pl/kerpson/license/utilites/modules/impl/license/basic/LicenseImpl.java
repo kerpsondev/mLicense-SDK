@@ -23,7 +23,7 @@ class LicenseImpl implements License {
   private final MachineInfo machineInfo;
   private final DurationInfo durationInfo;
 
-  protected LicenseImpl(
+  LicenseImpl(
       long id,
       @NotNull String key,
       long productId,
@@ -151,7 +151,7 @@ class LicenseImpl implements License {
     private final String email;
     private final long discordId;
 
-    protected ClientInfoImpl(
+    ClientInfoImpl(
         @NotNull String name,
         @Nullable String email,
         long discordId
@@ -185,7 +185,7 @@ class LicenseImpl implements License {
     private final String lastAddress;
     private final List<Request> requests;
 
-    protected AddressInfoImpl(
+    AddressInfoImpl(
         int limit,
         long duration,
         @Nullable String assignedAddress,
@@ -233,7 +233,7 @@ class LicenseImpl implements License {
     private final String lastMachine;
     private final List<MachineInfo.Request> requests;
 
-    protected MachineInfoImpl(
+    MachineInfoImpl(
         int limit,
         long duration,
         @Nullable String assignedMachine,
@@ -282,7 +282,7 @@ class LicenseImpl implements License {
     private final boolean active;
     private final String expiresAt;
 
-    protected DurationInfoImpl(
+    DurationInfoImpl(
         long duration,
         @NotNull String createdAt,
         @Nullable String lastRequest,
@@ -340,8 +340,6 @@ class LicenseImpl implements License {
     private AddressInfo addressInfo;
     private MachineInfo machineInfo;
     private DurationInfo durationInfo;
-
-    protected BuilderImpl() {}
 
     @Override
     public Builder setId(long id) {

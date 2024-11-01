@@ -13,7 +13,7 @@ class ProductImpl implements Product {
   private final long assignedUserId;
   private final long builtByBitResourceId;
 
-  protected ProductImpl(
+  ProductImpl(
       long id,
       @NotNull String name,
       @NotNull String version,

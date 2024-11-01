@@ -17,7 +17,7 @@ class AddonModuleImpl implements AddonModule {
 
   private final MSecrets secrets;
 
-  protected AddonModuleImpl(MSecrets secrets) {
+  AddonModuleImpl(MSecrets secrets) {
     this.secrets = secrets;
   }
 

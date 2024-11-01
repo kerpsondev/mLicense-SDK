@@ -17,7 +17,7 @@ class LicenseModuleImpl implements LicenseModule {
 
   private final MSecrets secrets;
 
-  protected LicenseModuleImpl(MSecrets secrets) {
+  LicenseModuleImpl(MSecrets secrets) {
     this.secrets = secrets;
   }
 

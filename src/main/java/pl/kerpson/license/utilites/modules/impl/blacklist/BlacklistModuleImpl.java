@@ -17,7 +17,7 @@ class BlacklistModuleImpl implements BlacklistModule {
 
   private final MSecrets secrets;
 
-  protected BlacklistModuleImpl(MSecrets secrets) {
+  BlacklistModuleImpl(MSecrets secrets) {
     this.secrets = secrets;
   }
 

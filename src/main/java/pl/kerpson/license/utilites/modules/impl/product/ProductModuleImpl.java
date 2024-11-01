@@ -17,7 +17,7 @@ class ProductModuleImpl implements ProductModule {
 
   private final MSecrets secrets;
 
-  protected ProductModuleImpl(MSecrets secrets) {
+  ProductModuleImpl(MSecrets secrets) {
     this.secrets = secrets;
   }
 

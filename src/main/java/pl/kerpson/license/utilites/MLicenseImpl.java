@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.NotNull;
+import pl.kerpson.license.utilites.exception.ModuleDisabledException;
 import pl.kerpson.license.utilites.modules.Module;
 import pl.kerpson.license.utilites.modules.OperationResult;
 import pl.kerpson.license.utilites.modules.impl.addon.AddonModule;
@@ -35,7 +36,11 @@ class MLicenseImpl implements MLicense {
   }
 
   @Override
-  public OperationResult<LicenseResult> checkLicense(@NotNull String key, @NotNull String product, @NotNull String version) {
+  public OperationResult<LicenseResult> checkLicense(@NotNull String key, @NotNull String product, @NotNull String version) throws ModuleDisabledException {
+    if (this.secrets.getSecret().isEmpty()) {
+      throw new ModuleDisabledException("Validation module is not enabled! Fill secret key from your account");
+    }
+
     BasicLicenseValidation basicLicenseValidation = new BasicLicenseValidation(
         key,
         product,
@@ -47,7 +52,11 @@ class MLicenseImpl implements MLicense {
   }
 
   @Override
-  public CompletableFuture<OperationResult<LicenseResult>> checkLicenseAsync(@NotNull String key, @NotNull String product, @NotNull String version) {
+  public CompletableFuture<OperationResult<LicenseResult>> checkLicenseAsync(@NotNull String key, @NotNull String product, @NotNull String version) throws ModuleDisabledException {
+    if (this.secrets.getSecret().isEmpty()) {
+      throw new ModuleDisabledException("Validation module is not enabled! Fill secret key from your account");
+    }
+
     BasicLicenseValidation basicLicenseValidation = new BasicLicenseValidation(
         key,
         product,
@@ -59,7 +68,11 @@ class MLicenseImpl implements MLicense {
   }
 
   @Override
-  public <T> T getModule(@NotNull Class<T> clazz) {
+  public <T> T getModule(@NotNull Class<T> clazz) throws ModuleDisabledException {
+    if (this.secrets.getApiKey().isEmpty()) {
+      throw new ModuleDisabledException(String.format("Module %s is not enabled! Fill api key from your account", clazz.getName()));
+    }
+
     return (T) modules.get(clazz);
   }
 }
